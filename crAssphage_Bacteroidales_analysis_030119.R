@@ -6,7 +6,7 @@ source("/Users/bpb/Documents/GitHub/microfiltR/microfiltR_source_code.R") #avail
 source("/Users/bpb/Documents/GitHub/crAssphage_M186D4_analyses/CoDA_functions_030119.R") #available @ https://github.com/itsmisterbrown/crAssphage_M186D4_analyses
 
 #load data
-inf.vs <- phyloseq::import_biom("/Users/bpb/Desktop/InFANT_virome/Bacterial_16S/analysis/Virome_subsample/dataset_files/Complete_virome_subset_013119_ASV_table_w_tax_md.biom")
+inf.vs <- phyloseq::import_biom("/Users/bpb/Desktop/InFANT_virome/Bacterial_16S/analysis/Virome_subsample/dataset_files/Complete_virome_subset_013119_ASV_table_w_tax_md.biom") #available @ https://github.com/itsmisterbrown/crAssphage_M186D4_analyses
 #update colnames
 colnames(tax_table(inf.vs)) <- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
 

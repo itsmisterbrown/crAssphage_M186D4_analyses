@@ -1,4 +1,4 @@
-#The compositional data analysis functions required to run the analyses in Brown et al. 2019 mBio
+#The compositional data analysis functions required to reproduce the analyses in Brown et al. 2019 mBio
 
 #error-checking functions
 format.check <- function(x){
@@ -76,6 +76,7 @@ shift.reference <- function(x, p){
   df.shifted
 }
 
+#create a predefined compositional balance with specific input taxa
 create.balance <- function(df, num.tax, den.tax, weighted=FALSE, p=NULL){
   df <- format.check(df)
   
