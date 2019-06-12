@@ -2,11 +2,10 @@ library(ggplot2)
 library(ggsignif)
 library(phyloseq)
 library(cowplot)
-source("/Users/bpb/Documents/GitHub/microfiltR/microfiltR_source_code.R") #available @ https://github.com/itsmisterbrown/microfiltR
-source("/Users/bpb/Documents/GitHub/crAssphage_M186D4_analyses/CoDA_functions_030119.R") #available @ https://github.com/itsmisterbrown/crAssphage_M186D4_analyses
+source("/Users/bpb/Documents/GitHub/microfiltR/microfiltR_source_code.R")
 
 #load data
-inf.vs <- phyloseq::import_biom("/Users/bpb/Desktop/InFANT_virome/Bacterial_16S/analysis/Virome_subsample/dataset_files/Complete_virome_subset_013119_ASV_table_w_tax_md.biom") #available @ https://github.com/itsmisterbrown/crAssphage_M186D4_analyses
+inf.vs <- phyloseq::import_biom("/Users/bpb/Desktop/InFANT_virome/Bacterial_16S/analysis/Virome_subsample/dataset_files/Complete_virome_subset_013119_ASV_table_w_tax_md.biom")
 #update colnames
 colnames(tax_table(inf.vs)) <- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
 
@@ -91,7 +90,7 @@ inf.vs.crass.p1 <- transform_sample_counts(physeq = inf.vs.crass, fun = function
 B.bal <- create.balance(df = t(otu_table(inf.vs.crass.p1)), num.tax = "ASV82", den.tax = "ASV55") 
 
 #create df for pairs plots and regression
-cdf <- cbind.data.frame(otu.tab, sampledf, B.bal)
+cdf <- cbind.data.frame(asv.tab, sampledf, B.bal)
 
 #statistical tests on ASV abundance by crassphage FC
 #wilcox
@@ -109,7 +108,7 @@ var.test(hiFC$ASV55, loFC$ASV55) #looks good
 t.test(ASV55~FCbin, data = cdf, var.equal=T)
 
 #GLM crassphage FC
-lmt <- glm(formula = sigvec~log10(FC), data = cdf, family = gaussian(link = identity)) #sigvec is the colname of the created ILR balance
+lmt <- glm(formula = sigvec~log10(FC), data = cdf, family = gaussian(link = identity))
 
 lmt
 summary(lmt)
@@ -161,7 +160,7 @@ plot2 <- ggplot(cdf, aes(x=FC, y=sigvec)) +
   scale_x_log10() +
   scale_color_manual(values = c("forestgreen", "orange")) +
   geom_smooth(method = "glm", data = cdf, formula = y~x, method.args = list(family = gaussian(link = identity)), se = TRUE) + 
-  labs(y=expression(paste(log(italic("B.thetaiotaomicron")/italic("P.merdae")))), x="crAssphage coverage") +
+  labs(y=expression(paste(log(italic(over("B.thetaiotaomicron","P.merdae"))))), x="crAssphage coverage") +
   guides(color=guide_legend(title="HIV status"))
 
 #plot it
